@@ -28,8 +28,10 @@ public class HuffmanConverter{
             }
 
             for (int i = 0; i < NUMBER_OF_CHARACTERS; i++) {
-                System.out.print("< " + (char) i + ", " + count[i] + " >" + " ");
+                if (count[i] > 1)
+                    System.out.print("< " + (char) i + ", " + count[i] + " >" + " ");
             }
+            System.out.println();
         }
 
         // Construct a Huffman tree from count and 
