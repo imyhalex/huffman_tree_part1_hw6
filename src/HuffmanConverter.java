@@ -23,23 +23,81 @@ public class HuffmanConverter{
 
         // Record how often each character occurs and store in count.
         public void recordFrequencies() {
-            
+            for (char c: contents.toCharArray()) {
+                count[(int) c]++;
+            }
+
+            for (int i = 0; i < NUMBER_OF_CHARACTERS; i++) {
+                System.out.print("< " + (char) i + ", " + count[i] + " >" + " ");
+            }
         }
 
         // Construct a Huffman tree from count and 
         // store the tree in huffmanTree.
-        public void frequenciesToTree() {}
+        public void frequenciesToTree() {
+            BinaryHeap<HuffmanNode> heap = new BinaryHeap<>();
+
+            for (int i = 0; i < NUMBER_OF_CHARACTERS; i++) {
+                if (count[i] > 0) {
+                    heap.insert(new HuffmanNode(String.valueOf((char) i), (double) count[i]));
+                }
+            }
+            huffmanTree = HuffmanTree.createFromHeap(heap);
+        }
 
         // Construct code from huffmanTree.
-        public void treeToCode() {}
+        public void treeToCode() {
+            // Arrays.fill(code, "");
 
-        private void treeToCode(HuffmanNode t, String encoding) {}
+            if (huffmanTree.root != null) {
+                treeToCode(huffmanTree.root, "");
+            }
+            
+            huffmanTree.printLegend();
+        }
+
+        private void treeToCode(HuffmanNode t, String encoding) {
+            if (t != null) {
+                // if reach the leaf node
+                if (t.left == null && t.right == null) {
+                    code[(int) t.letter.charAt(0)] = encoding;
+                } else {
+                    treeToCode(t.left, encoding + "0");
+                    treeToCode(t.right, encoding + "1");
+                }
+            }
+        }
 
         // Encode content using code.
-        public String encodeMessage() {}
+        public String encodeMessage() {
+            StringBuilder builder = new StringBuilder();
+
+            for (char c: contents.toCharArray()) {
+                builder.append(code[(int) c]);
+            }
+
+            return builder.toString();
+        }
         
         // Decode a Huffman encoding.
-        public String decodeMessage(String encodedStr) {}
+        public String decodeMessage(String encodedStr) {
+            StringBuilder builder = new StringBuilder();
+
+            HuffmanNode current = huffmanTree.root;
+
+            for (int i = 0; i < encodedStr.length(); i++) {
+                current = encodedStr.charAt(i) == '0' ? current.left : current.right;
+
+                // if reach the leaf node
+                if (current.left == null && current.right == null) {
+                    builder.append(current.letter);
+                    // assign it back to root
+                    current = huffmanTree.root;
+                }
+            }
+
+            return builder.toString();
+        }
 
         // Read an input file.
         public static String readContents(String filename) {

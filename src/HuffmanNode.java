@@ -1,4 +1,4 @@
-public class HuffmanNode implements Comparable
+public class HuffmanNode implements Comparable<Object>
 { 
     public String letter;  
     public Double frequency; 
