@@ -16,7 +16,18 @@ public class HuffmanTree
       }
 
       if (t.letter.length() == 1) {
-         System.out.println(t.letter +"="+ s);
+
+         if (t.letter.equals("\n")) 
+            System.out.println("\\n" + "="+ s);
+
+         else if (t.letter.equals("\t")) 
+            System.out.println("\\t" + "="+ s);
+
+         else if (t.letter.equals("\r")) 
+            System.out.println("\\r" + "="+ s);
+
+         else 
+            System.out.println(t.letter +"="+ s);
       } else { 
          printLegend(t.left, s + "0");
          printLegend(t.right, s + "1");

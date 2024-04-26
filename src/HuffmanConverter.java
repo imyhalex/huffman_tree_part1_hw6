@@ -28,8 +28,17 @@ public class HuffmanConverter{
             }
 
             for (int i = 0; i < NUMBER_OF_CHARACTERS; i++) {
-                if (count[i] > 1)
-                    System.out.print("< " + (char) i + ", " + count[i] + " >" + " ");
+                if (count[i] >= 1) {
+                    if (i == '\n') {
+                        System.out.print("< \\n, " + count[i] + " > ");
+                    } else if (i == '\t') {
+                        System.out.print("< \\t, " + count[i] + " > ");
+                    } else if (i == '\r') {
+                        System.out.print("< \\r, " + count[i] + " > ");
+                    } else {
+                        System.out.print("< " + (char) i + ", " + count[i] + " > ");
+                    }
+                }
             }
             System.out.println();
         }
@@ -124,10 +133,13 @@ public class HuffmanConverter{
                 HuffmanConverter h = new HuffmanConverter(input);
                 h.recordFrequencies();
                 // Print a list of characters and frequencies here!
+                System.out.println();
                 h.frequenciesToTree();
                 h.treeToCode();
                 // Print the Huffman encoding here!
                 String encoded = h.encodeMessage();
+                System.out.println();
+                System.out.println("Huffman Encoding:");
                 System.out.println(encoded+"\n");
                 System.out.println("Message size in ASCII encoding: "+h.contents.length()*8);
                 System.out.println("Message size in Huffman coding: "+encoded.length()+"\n");
